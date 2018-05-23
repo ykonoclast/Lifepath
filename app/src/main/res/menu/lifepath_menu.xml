@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--un titre en dur et soundoff ne devrait pas s'appeler comme ça-->
+
+    <item
+        android:id="@+id/soundoff"
+        android:checkable="true"
+        android:checked="true"
+        android:icon="@drawable/ic_volume_off_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/menuitem_soundoff" />
+
+    <item
+        android:id="@+id/cancel"
+        android:icon="@drawable/ic_cancel_black_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/menuitem_cancel" />
+</menu>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--les namespaces ("xmlns") sont utilisés pour raccourcir les noms, android ici sera autmatiquement remplacé par http://schemas.android.com/apk/res/android-->
+
+<!-- on utilise le coordinatorlayout : il s'ágit de la même chose qu'un FrameLayout (donc un seul élément) mais avec la capacité de modifier les tailles relatives des éléments-->
+<!-- point important : la recyclerview a un padding égal à l'épaisseur de la toolbar pour ne pas être cachée derrière-->
+
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lifepath-layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PathActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/fad-toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize" />
+
+</android.support.design.widget.CoordinatorLayout>
