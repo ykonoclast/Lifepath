@@ -2,6 +2,7 @@ package org.duckdns.spacedock.lifepath;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,33 +19,7 @@ import org.duckdns.spacedock.liblifepath.PathNavigator;
  */
 public class PathActivity extends AppCompatActivity//TODO expliquer necessaire pour ToolBar, difference avec actionbar et besoin de mettre style dans manifeste et autre actions du tuto
 {
-
-    /**
-     * l'adapter qui va servir à peupler les données dans la RecyclerView
-     */
-    private PathAdapter m_adapter;
-
-    /**
-     * navigateur de LifePath associé à l'activité, issu d'une librairie externe
-     */
-    private final PathNavigator m_navigator = new PathNavigator();
-
-    /**
-     * la vue scrollante qui va accueillir les textes et boutons
-     */
-    private RecyclerView m_recyclerView;
-
-    /**
-     * listener employé pour les boutons de navigations
-     */
-    private final View.OnClickListener m_navButtonListener = new View.OnClickListener()
-    {
-        @Override
-        public void onClick(View p_view)
-        {
-            pathNavButtonCallback((String)p_view.getTag());//on se contente d'appeler une callback qui fera le tri
-        }
-    };
+    private PathFragment m_pathFragment;//TODO doc
 
     /**
      * activité juste créée : cette méthode sert surtout à initialiser les diverses variables
@@ -55,15 +30,33 @@ public class PathActivity extends AppCompatActivity//TODO expliquer necessaire p
     {
         super.onCreate(savedInstanceState);//le Bundle peut être fourni par l'OS, notamment quand l'activité redémarre après changement d'orientation écran
         setContentView(R.layout.activity_path);//inflate le layout : crée les objets vues et, dans le cas d'un objet composé comme ici, créée leur hiérarchie
-
+//TODO expliquer pour setContentView et pas inflate
         setSupportActionBar((Toolbar)findViewById(R.id.fad_toolbar));//l'actionbar par défaut étant désactivée par le thème il faut du coup indiquer programmatiquement quelle actionbar il faut utiliser : ici la toolbar définie dans le layout de l'activité
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//affiche la flèche de retour
 
-        m_adapter = new PathAdapter(m_navigator.getCurrentChoice(), m_navButtonListener);//c'est l'adapter qui passera ce listener aux boutons quand il les créera
 
-        m_recyclerView = findViewById(R.id.recyclerview);
-        m_recyclerView.setLayoutManager(new LinearLayoutManager(this));//on passe l'activité comme contexte : les thèmes passeront du coup et il n'y aura pas de fuite mémoire car les références sur la recyclerview sont dans l'activité, tout sera garbage-collecté ensemble
-        m_recyclerView.setAdapter(m_adapter);
+        String pathTag = getString(R.string.tag_pathfrag);
+
+        FragmentManager fm = getSupportFragmentManager();//TODO support
+        m_pathFragment = (PathFragment) fm.findFragmentByTag(pathTag);//TODO tag vs ID
+
+        if (m_pathFragment == null)
+        {
+            m_pathFragment = new PathFragment();
+
+
+            fm.beginTransaction().add(R.id.lifepath_layout,m_pathFragment,pathTag).commit();//TODO fragment réattaché par magie sur recréation
+
+            //TODO doc addtobackstack avec bouton back etc.
+            //TODO setdata? getdata dans le else?
+        }
+
+
+
+
+
+
+        //TODO plutot utiliser le isinlayout a voir
     }
 
     /**
@@ -87,28 +80,15 @@ public class PathActivity extends AppCompatActivity//TODO expliquer necessaire p
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home)//home est traité comme back ("up") parce que oncreate le définit ainsi avec setDisplayHomeAsUpEnabled
         {
-            if(m_navigator.canRollback())
-            {//On n'est pas au node initial, on rollback la partie nav puis la partie graphique
-                m_navigator.rollback();
-                m_adapter.rollBack();
-            }
-            else
+            if(!m_pathFragment.rollback())
             {//on est au node initial, pour l'instant on affiche juste un message d'erreur, à terme on reviendra à l'activité de départ
                 Snackbar.make(findViewById(R.id.lifepath_layout), R.string.rollback_impos,Snackbar.LENGTH_SHORT).show();//TODO traiter retour au menu, peut-être avec finish() et virer ce snack avec message en dur
+                //TODO revenir a l'áctivité précédente
             }
         }
 
         //TODO autres boutons du menu
 
         return true; //important : consomme l'événement onClick, un false autorise la poursuite du traitement et d'autres éléments pourraient alors recevoir le onClick()
-    }
-
-    /**
-     * Callback pour la sélection de choix de Lifepath
-     * @param p_tag
-     */
-    void pathNavButtonCallback(String p_tag)
-    {
-        m_adapter.takeDecision(m_navigator.decide(p_tag));//on active la navigateur pour qu'il fournisse le nouveau choix et on en informe l'adapter pour qu'il ajuste la RecyclerView
     }
 }

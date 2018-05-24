@@ -6,4 +6,8 @@
     <string name="menuitem_cancel">Annuler ce lifepath</string>
     <string name="rollback_impos">Déjà au premier node</string>
     <string name="error_decnonvide">La liste des décisions n\\'est pas vide</string>
+    <string name="param_nav">navigator</string>
+    <string name="tag_pathfrag">pathfrag</string>
+
+
 </resources>
