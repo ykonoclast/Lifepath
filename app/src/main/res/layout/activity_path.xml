@@ -2,8 +2,7 @@
 
 <!--les namespaces ("xmlns") sont utilisés pour raccourcir les noms, android ici sera autmatiquement remplacé par http://schemas.android.com/apk/res/android-->
 
-<!-- on utilise le coordinatorlayout : il s'ágit de la même chose qu'un FrameLayout (donc un seul élément) mais avec la capacité de modifier les tailles relatives des éléments-->
-<!-- point important : la recyclerview a un padding égal à l'épaisseur de la toolbar pour ne pas être cachée derrière-->
+<!-- on utilise le coordinatorlayout : il s'agit de la même chose qu'un FrameLayout (donc un seul élément) mais avec la capacité de modifier les tailles relatives des éléments--><!-- point important : la recyclerview a un padding égal à l'épaisseur de la toolbar pour ne pas être cachée derrière-->
 
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +22,12 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Dark" />
 
-
-
+    <fragment
+        android:id="@+id/fragment"
+        android:name="org.duckdns.spacedock.lifepath.PathUIFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize" />
+    <!--ce margin correspond à l'attribut "padding" des vues, si on voulait on pourrait l'implémenter dans la recycclerview directement de la façon suivante : android:paddingTop="?attr/actionBarSize"-->
 
 </android.support.design.widget.CoordinatorLayout>

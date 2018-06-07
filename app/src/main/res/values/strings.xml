@@ -1,13 +1,16 @@
 <resources>
+
     <string name="app_name">Lifepath</string>
+    <string name="rollback_impos">Déjà au premier node</string>
+
+
+    <string name="error_decnonvide">La liste des décisions n\'est pas vide</string>
+    <string name="error_nullId">L\'ID du node ne peut être null</string>
+
+
     <string name="menuitem_back">Retour</string>
     <string name="menuitem_soundon">Son activé</string>
     <string name="menuitem_soundoff">Son coupé</string>
     <string name="menuitem_cancel">Annuler ce lifepath</string>
-    <string name="rollback_impos">Déjà au premier node</string>
-    <string name="error_decnonvide">La liste des décisions n\\'est pas vide</string>
-    <string name="param_nav">navigator</string>
-    <string name="tag_pathfrag">pathfrag</string>
-
 
 </resources>
